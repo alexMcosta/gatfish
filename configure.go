@@ -10,6 +10,7 @@ import (
 //Configure is the data model for the configure YAML
 type Configure struct {
 	EC2 map[string]string `yaml:"EC2"`
+	EBS map[string]string `yaml:"EBS"`
 }
 
 //GetConf iterates through the config Yaml

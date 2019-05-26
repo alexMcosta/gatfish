@@ -1,3 +1,5 @@
 EC2:
   Name: DIRE
-
+  
+EBS:
+    Owner: REQUIRED
