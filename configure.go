@@ -16,7 +16,7 @@ type Configure struct {
 //GetConf iterates through the config Yaml
 func (c *Configure) GetConf() *Configure {
 
-	confFile, err := ioutil.ReadFile("example.yaml")
+	confFile, err := ioutil.ReadFile("gatfish.yaml")
 	if err != nil {
 		log.Printf("confFile.Get err   #%v ", err)
 	}
