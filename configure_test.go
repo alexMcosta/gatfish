@@ -17,7 +17,7 @@ func TestGetConf(t *testing.T) {
 		}
 	})
 
-	t.Run("get EC2 tag map", func(t *testing.T) {
+	t.Run("get one value in tag map", func(t *testing.T) {
 		var c Configure
 		c.GetConf()
 		got := &c.EC2
@@ -26,11 +26,16 @@ func TestGetConf(t *testing.T) {
 		assertMaps(t, got, want)
 	})
 
-	t.Run("get EBS tag map", func(t *testing.T) {
+	t.Run("get multiple in tag map", func(t *testing.T) {
+
 		var c Configure
 		c.GetConf()
+		wantMap := make(map[string]string)
+		wantMap["Owner"] = "REQUIRED"
+		wantMap["Name"] = "DIRE"
+
 		got := &c.EBS
-		want := assertWant(t, "Owner", "REQUIRED")
+		want := &wantMap
 
 		assertMaps(t, got, want)
 	})
