@@ -1,16 +1,16 @@
-package main
+package resources
 
 import (
 	"reflect"
 	"testing"
 )
 
-func TestGetConf(t *testing.T) {
+func TestConfigurer(t *testing.T) {
 
 	t.Run("get pointer to a configure object", func(t *testing.T) {
-		var c Configure
-		got := c.GetConf()
-		want := &c
+		var tags Tags
+		got := tags.Configure()
+		want := &tags
 
 		if want != got {
 			t.Errorf("got %s want %s", got, want)
@@ -18,9 +18,9 @@ func TestGetConf(t *testing.T) {
 	})
 
 	t.Run("get one value in tag map", func(t *testing.T) {
-		var c Configure
-		c.GetConf()
-		got := &c.EC2
+		var tags Tags
+		tags.Configure()
+		got := &tags.EC2
 		want := assertWant(t, "Name", "DIRE")
 
 		assertMaps(t, got, want)
@@ -28,13 +28,13 @@ func TestGetConf(t *testing.T) {
 
 	t.Run("get multiple in tag map", func(t *testing.T) {
 
-		var c Configure
-		c.GetConf()
+		var tags Tags
+		tags.Configure()
 		wantMap := make(map[string]string)
 		wantMap["Owner"] = "REQUIRED"
 		wantMap["Name"] = "DIRE"
 
-		got := &c.EBS
+		got := &tags.EBS
 		want := &wantMap
 
 		assertMaps(t, got, want)

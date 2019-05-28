@@ -1,4 +1,4 @@
-package main
+package resources
 
 import (
 	"io/ioutil"
@@ -8,24 +8,24 @@ import (
 )
 
 //Configure is the data model for the configure YAML
-type Configure struct {
+type Tags struct {
 	ALL map[string]string `yaml:"ALL"`
 	EC2 map[string]string `yaml:"EC2"`
 	EBS map[string]string `yaml:"EBS"`
 }
 
 //GetConf reads through the config Yaml
-func (c *Configure) GetConf() *Configure {
+func (t *Tags) Configure() *Tags {
 
 	confFile, err := ioutil.ReadFile("gatfish.yaml")
 	if err != nil {
-		log.Printf("confFile.Get err   #%v ", err)
+		log.Printf("Error: There is no gatfish.yaml err= %v", err)
 	}
 
-	err = yaml.Unmarshal(confFile, c)
+	err = yaml.Unmarshal(confFile, t)
 	if err != nil {
 		log.Fatalf("Unmarshal: %v", err)
 	}
 
-	return c
+	return t
 }
