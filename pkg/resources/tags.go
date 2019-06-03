@@ -17,7 +17,7 @@ type Tags struct {
 //GetConf reads through the config Yaml
 func (t *Tags) Configure() *Tags {
 
-	confFile, err := ioutil.ReadFile("gatfish.yaml")
+	confFile, err := ioutil.ReadFile("../../gatfish.yaml")
 	if err != nil {
 		log.Printf("Error: There is no gatfish.yaml err= %v", err)
 	}

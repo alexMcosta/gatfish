@@ -1,6 +1,7 @@
 package cloud
 
 import (
+	"reflect"
 	"testing"
 
 	"github.com/aws/aws-sdk-go/service/ec2"
@@ -16,7 +17,7 @@ func (m *MockEC2API) DescribeVolumes(in *ec2.DescribeVolumesInput) (*ec2.Describ
 	if m.DescribeVolumesMethod != nil {
 		return m.DescribeVolumesMethod(in)
 	}
-	volumeID := "vol-123456"
+	volumeID := "vol-1234567"
 	tagKey := "Name"
 	tagValue := "DIRE"
 	tag := ec2.Tag{Key: &tagKey, Value: &tagValue}
@@ -29,11 +30,11 @@ func TestEBSCompliance(t *testing.T) {
 	mockSvc := &MockEC2API{}
 
 	tags := make(map[string]string)
-	tags["Name"] = "Cat"
+	tags["Notname"] = "Cat"
 	got := EBSCompliance(mockSvc, tags)
-	want := "vol-1234567"
+	want := []string{"vol-1234567"}
 
-	if got != want {
-		t.Errorf("wanted calls %s got %s", want, got)
+	if !reflect.DeepEqual(want, got) {
+		t.Errorf("wanted calls %v got %v", want, got)
 	}
 }

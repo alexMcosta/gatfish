@@ -1,7 +1,43 @@
 package cloud
 
-import "github.com/aws/aws-sdk-go/service/ec2/ec2iface"
+import (
+	"fmt"
+	"os"
 
-func EBSCompliance(svc ec2iface.EC2API, tags map[string]string) string {
-	return "vol-1234567"
+	"github.com/aws/aws-sdk-go/aws/awserr"
+	"github.com/aws/aws-sdk-go/service/ec2"
+	"github.com/aws/aws-sdk-go/service/ec2/ec2iface"
+)
+
+func EBSCompliance(svc ec2iface.EC2API, tags map[string]string) []string {
+
+	culpritIDs := []string{}
+
+	// Go get them volumes and send an AWS error if there is one
+	volumes, err := svc.DescribeVolumes(&ec2.DescribeVolumesInput{})
+	if err != nil {
+		if aerr, ok := err.(awserr.Error); ok {
+			switch aerr.Code() {
+			default:
+				fmt.Println(aerr.Error())
+				os.Exit(1)
+			}
+		} else {
+			fmt.Println(err.Error())
+		}
+	}
+
+	// Check every volume tag for the Tag name in question
+	for tagN, _ := range tags {
+		for _, vol := range volumes.Volumes {
+			for _, valTag := range vol.Tags {
+				if *valTag.Key == tagN {
+					continue
+				} else {
+					culpritIDs = append(culpritIDs, *vol.VolumeId)
+				}
+			}
+		}
+	}
+	return culpritIDs
 }
