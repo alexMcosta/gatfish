@@ -19,7 +19,7 @@ func (m *MockEC2API) DescribeVolumes(in *ec2.DescribeVolumesInput) (*ec2.Describ
 	}
 	volumeID := "vol-1234567"
 	tagKey := "Name"
-	tagValue := "DIRE"
+	tagValue := "Baron"
 	tag := ec2.Tag{Key: &tagKey, Value: &tagValue}
 
 	return &ec2.DescribeVolumesOutput{Volumes: []*ec2.Volume{{VolumeId: &volumeID, Tags: []*ec2.Tag{&tag}}}}, nil
@@ -28,11 +28,12 @@ func (m *MockEC2API) DescribeVolumes(in *ec2.DescribeVolumesInput) (*ec2.Describ
 func TestEBSCompliance(t *testing.T) {
 	//Mock the service
 	mockSvc := &MockEC2API{}
+	want := make(map[string][]string)
 
 	tags := make(map[string]string)
-	tags["Notname"] = "Cat"
+	tags["Notname"] = "DIRE"
 	got := EBSCompliance(mockSvc, tags)
-	want := []string{"vol-1234567"}
+	want["DIRE"] = append(want["DIRE"], "vol-1234567")
 
 	if !reflect.DeepEqual(want, got) {
 		t.Errorf("wanted calls %v got %v", want, got)

@@ -9,11 +9,11 @@ import (
 	"github.com/aws/aws-sdk-go/service/ec2/ec2iface"
 )
 
-func EBSCompliance(svc ec2iface.EC2API, tags map[string]string) []string {
+func EBSCompliance(svc ec2iface.EC2API, tags map[string]string) map[string][]string {
 
-	culpritIDs := []string{}
+	culpritIDs := make(map[string][]string)
 
-	// Go get them volumes and send an AWS error if there is one
+	// Go get the volumes
 	volumes, err := svc.DescribeVolumes(&ec2.DescribeVolumesInput{})
 	if err != nil {
 		if aerr, ok := err.(awserr.Error); ok {
@@ -28,13 +28,13 @@ func EBSCompliance(svc ec2iface.EC2API, tags map[string]string) []string {
 	}
 
 	// Check every volume tag for the Tag name in question
-	for tagN, _ := range tags {
+	for tagN, tagV := range tags {
 		for _, vol := range volumes.Volumes {
 			for _, valTag := range vol.Tags {
 				if *valTag.Key == tagN {
 					continue
 				} else {
-					culpritIDs = append(culpritIDs, *vol.VolumeId)
+					culpritIDs[tagV] = append(culpritIDs[tagV], *vol.VolumeId)
 				}
 			}
 		}
