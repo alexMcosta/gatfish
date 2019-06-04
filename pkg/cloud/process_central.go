@@ -6,3 +6,5 @@ func ProcessCentral(tags *Tags) string {
 
 	return "Process Central Complete"
 }
+
+// Helper function that processes the ALL configuration
