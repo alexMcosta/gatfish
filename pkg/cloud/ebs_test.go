@@ -26,21 +26,19 @@ func (m *MockEC2API) DescribeVolumes(in *ec2.DescribeVolumesInput) (*ec2.Describ
 }
 
 func TestEBSCompliance(t *testing.T) {
+	//Mock the service
+	mockSvc := &MockEC2API{}
 
-	t.Run("get DIRE tags not listed", func(t *testing.T) {
-		//Mock the service
-		mockSvc := &MockEC2API{}
+	want := make(map[string][]string)
 
-		want := make(map[string][]string)
+	//Mock the output of resources resources/tags.go
+	tags := make(map[string]string)
+	tags["Notname"] = "DIRE"
 
-		tags := make(map[string]string)
-		tags["Notname"] = "DIRE"
-		got := EBSCompliance(mockSvc, tags)
-		want["DIRE"] = append(want["DIRE"], "vol-1234567")
+	got := EBSCompliance(mockSvc, tags)
+	want["DIRE"] = append(want["DIRE"], "vol-1234567")
 
-		if !reflect.DeepEqual(want, got) {
-			t.Errorf("wanted calls %v got %v", want, got)
-		}
-	})
-
+	if !reflect.DeepEqual(want, got) {
+		t.Errorf("wanted calls %v got %v", want, got)
+	}
 }
