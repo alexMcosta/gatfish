@@ -29,3 +29,8 @@ func (t *Tags) Configure() *Tags {
 
 	return t
 }
+
+// Interface
+type Resource interface {
+	Configure()
+}
