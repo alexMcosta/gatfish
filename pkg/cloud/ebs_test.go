@@ -43,20 +43,4 @@ func TestEBSCompliance(t *testing.T) {
 		}
 	})
 
-	t.Run("get WANTED tags not listed", func(t *testing.T) {
-		//Mock the service
-		mockSvc := &MockEC2API{}
-
-		want := make(map[string][]string)
-
-		tags := make(map[string]string)
-		tags["Notname"] = "WANTED"
-		got := EBSCompliance(mockSvc, tags)
-		want["WANTED"] = append(want["WANTED"], "vol-1234567")
-
-		if !reflect.DeepEqual(want, got) {
-			t.Errorf("wanted calls %v got %v", want, got)
-		}
-	})
-
 }
