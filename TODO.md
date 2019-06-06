@@ -2,6 +2,7 @@
 ### Resources
 1. List of AWS resources that take tagging; https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html
 2. AWS Tagging best practices: https://aws.amazon.com/answers/account-management/aws-tagging-strategies/
+3. Add account info to YAML config
 
 #### YAML config 
 The YAML will have product type followed by keys, values, than level of requirement like so:
