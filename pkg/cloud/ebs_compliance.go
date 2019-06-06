@@ -9,6 +9,8 @@ import (
 	"github.com/aws/aws-sdk-go/service/ec2/ec2iface"
 )
 
+// EBSCompliance searches EBS volumes to see if they have the requested tag keys
+// If they do not it will store the volume ID and the level of severity and output the results
 func EBSCompliance(svc ec2iface.EC2API, tags map[string]string) map[string][]string {
 
 	culpritIDs := make(map[string][]string)
