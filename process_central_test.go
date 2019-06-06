@@ -2,12 +2,6 @@ package main
 
 import "testing"
 
-type Tags struct {
-	ALL map[string]string
-	EC2 map[string]string
-	EBS map[string]string
-}
-
 func TestProcessCentral(t *testing.T) {
 
 	tags := Tags{
