@@ -24,3 +24,9 @@ ALL:
 **WANTED**: Will Log that the resource has not been tagged with this. Eventually you can tag this resource with a time stamp so you can give the team / owner a deadline to tag the resource.
 
 **AUTO**: If the tag can be automatically added such as having an owner then AUTO will tag the resource with the Owner tag by gathering the user information from Cloudtrail or some sort of external resource.
+
+---
+
+## KNOWN ISSUES
+
+1. EBSCompliance will not report the volume ID if it has not tags
