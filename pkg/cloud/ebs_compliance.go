@@ -32,10 +32,14 @@ func EBSCompliance(svc ec2iface.EC2API, tags map[string]string) map[string][]str
 	// Check every volume tag for the Tag name in question
 	for tagN, tagV := range tags {
 		for _, vol := range volumes.Volumes {
+			if vol.Tags == nil {
+				culpritIDs[tagV] = append(culpritIDs[tagV], *vol.VolumeId)
+			}
 			for _, valTag := range vol.Tags {
-				if *valTag.Key == tagN {
+				switch *valTag.Key {
+				case tagN:
 					continue
-				} else {
+				default:
 					culpritIDs[tagV] = append(culpritIDs[tagV], *vol.VolumeId)
 				}
 			}
