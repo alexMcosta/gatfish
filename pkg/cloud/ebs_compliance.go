@@ -41,5 +41,6 @@ func EBSCompliance(svc ec2iface.EC2API, tags map[string]string) map[string][]str
 			}
 		}
 	}
+	// fmt.Printf("%v", volumes)
 	return culpritIDs
 }
