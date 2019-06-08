@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/alexmcosta/gatfish/pkg/cloud"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -17,13 +15,15 @@ func processCentral(tags *Tags) string {
 	sess := session.Must(session.NewSession(&aws.Config{
 		Region: aws.String("us-east-1"),
 	}))
+
 	EC2Session := ec2.New(sess)
 
-	meow := cloud.EBSCompliance(EC2Session, tags.EBS)
-
-	fmt.Printf("%v", meow)
+	cloud.EBSCompliance(EC2Session, tags.EBS)
 
 	return "Process Central Complete"
 }
 
-// Helper function that processes the ALL configuration
+//TODO
+//Helper that processes the ALL configuration
+//Helper that processes all the different product sessions
+//Have Process Central return an error instead of a string

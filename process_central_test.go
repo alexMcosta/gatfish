@@ -13,6 +13,7 @@ func TestProcessCentral(t *testing.T) {
 	tagPointer := &tags
 
 	got := processCentral(tagPointer)
+
 	want := "Process Central Complete"
 
 	if got != want {
